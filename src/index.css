@@ -21,3 +21,13 @@ input,
 textarea {
   font: inherit;
 }
+div::-webkit-scrollbar {
+  width: 5px;
+}
+div::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+div::-webkit-scrollbar-thumb {
+  background: #d41428;
+  border-radius: 10px;
+}

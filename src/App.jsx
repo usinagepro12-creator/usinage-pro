@@ -314,7 +314,6 @@ function Header({ currentPage, setCurrentPage, nav, logoUp }) {
           <img src={logoUp} alt="USINAGE PRO" className="h-[72px] w-auto object-contain" />
         </button>
 
-        {/* Barre de recherche (Desktop) */}
         <form
           onSubmit={handleSearch}
           className="hidden md:flex items-center border border-gray-300 rounded-md overflow-hidden focus-within:border-[#d41428] mx-4"
@@ -334,7 +333,6 @@ function Header({ currentPage, setCurrentPage, nav, logoUp }) {
           </button>
         </form>
 
-        {/* Menu Navigation (Desktop) */}
         <nav className="hidden flex-1 justify-end lg:flex">
           {nav.map((item) => (
             <div key={item.label} className="group relative">
@@ -365,7 +363,6 @@ function Header({ currentPage, setCurrentPage, nav, logoUp }) {
           ))}
         </nav>
 
-        {/* Bouton Burger (Mobile) */}
         <button
           type="button"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -376,58 +373,86 @@ function Header({ currentPage, setCurrentPage, nav, logoUp }) {
         </button>
       </div>
 
-      {/* Dropdown Menu (Mobile) */}
-      {isMenuOpen && (
-        <div className="border-t border-gray-200 bg-white px-4 py-6 shadow-lg lg:hidden">
-          {/* Barre de recherche (Mobile) */}
-          <form
-            onSubmit={handleSearch}
-            className="mb-6 flex items-center border border-gray-300 rounded-md overflow-hidden"
-          >
-            <input
-              type="text"
-              placeholder="Rechercher..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full px-4 py-2 text-sm outline-none text-gray-800"
-            />
-            <button type="submit" className="bg-[#d41428] px-4 py-2 text-white">
-              🔍
-            </button>
-          </form>
+{isMenuOpen && (
+  <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm lg:hidden flex justify-start">
+    <div className="w-[85%] max-w-sm bg-white p-5 shadow-2xl h-full flex flex-col">
+      
+      <div className="flex items-center justify-between border-b pb-4 mb-3 flex-shrink-0">
+        <img src={logoUp} alt="USINAGE PRO" className="h-10 w-auto" />
+        <button
+          onClick={() => setIsMenuOpen(false)}
+          className="p-2 text-gray-500 hover:text-red-600 rounded-md border"
+        >
+          ✕
+        </button>
+      </div>
 
-          {/* Navigation & Sous-menus (Mobile) */}
-          <nav className="flex flex-col gap-3">
-            {nav.map((item) => (
-              <div key={item.label} className="flex flex-col">
-                <button
-                  type="button"
-                  onClick={() => handleNavClick(item.page)}
-                  className={`text-left border-b border-gray-100 pb-2 text-base font-bold uppercase transition ${
-                    currentPage === item.page ? 'text-[#d41428]' : 'text-gray-800 hover:text-[#d41428]'
-                  }`}
-                >
-                  {item.label}
-                </button>
-                {item.children && (
-                  <div className="ml-4 my-2 flex flex-col gap-2 border-l-2 border-[#d41428] pl-3">
-                    {item.children.map((child) => (
-                      <button
-                        type="button"
-                        key={child.label}
-                        onClick={() => handleNavClick(child.page)}
-                        className="text-left text-sm font-medium uppercase text-gray-600 hover:text-[#d41428]"
-                      >
-                        {child.label}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
-          </nav>
+      <div className="flex-1 overflow-y-auto pr-2 space-y-4">
+        
+        <div className="relative mb-4">
+          <input
+            type="text"
+            placeholder="Rechercher..."
+            className="w-full border p-2 pr-10 text-sm rounded"
+          />
+          <button className="absolute right-0 top-0 bottom-0 bg-[#d41428] text-white px-3 rounded-r">
+            🔍
+          </button>
         </div>
-      )}
+
+   
+        <nav className="space-y-3">
+      
+          <button
+            onClick={() => { setCurrentPage('home'); setIsMenuOpen(false); }}
+            className="block w-full text-left font-bold text-[#d41428] border-b pb-2"
+          >
+            ACCUEIL
+          </button>
+
+         
+          <div className="space-y-1 border-b pb-2">
+            <p className="font-bold text-gray-800 text-sm">NOTRE SOCIÉTÉ</p>
+            <div className="pl-3 border-l-2 border-red-500 space-y-1 text-sm text-gray-600">
+              <p onClick={() => setIsMenuOpen(false)} className="cursor-pointer hover:text-red-600">PRÉSENTATION</p>
+              <p onClick={() => setIsMenuOpen(false)} className="cursor-pointer hover:text-red-600">HISTOIRE</p>
+              <p onClick={() => setIsMenuOpen(false)} className="cursor-pointer hover:text-red-600">QUALITÉ</p>
+            </div>
+          </div>
+
+         
+          <div className="space-y-1 border-b pb-2">
+            <p className="font-bold text-gray-800 text-sm">NOS SAVOIR-FAIRE</p>
+            <div className="pl-3 border-l-2 border-red-500 space-y-1 text-sm text-gray-600">
+              <p onClick={() => setIsMenuOpen(false)} className="cursor-pointer hover:text-red-600">ETUDES</p>
+              <p onClick={() => setIsMenuOpen(false)} className="cursor-pointer hover:text-red-600">RÉALISATIONS</p>
+              <p onClick={() => setIsMenuOpen(false)} className="cursor-pointer hover:text-red-600">SYSTÈMES</p>
+              <p onClick={() => setIsMenuOpen(false)} className="cursor-pointer hover:text-red-600">SERVICES</p>
+            </div>
+          </div>
+
+          
+          <div className="space-y-1 border-b pb-2">
+            <p className="font-bold text-gray-800 text-sm">NOS DOMAINES D'INTERVENTION</p>
+            <div className="pl-3 border-l-2 border-red-500 space-y-1 text-sm text-gray-600">
+              <p onClick={() => setIsMenuOpen(false)} className="cursor-pointer hover:text-red-600">TRANSPORT</p>
+              <p onClick={() => setIsMenuOpen(false)} className="cursor-pointer hover:text-red-600">ÉNERGIE</p>
+              <p onClick={() => setIsMenuOpen(false)} className="cursor-pointer hover:text-red-600">MÉCANIQUE</p>
+              <p onClick={() => setIsMenuOpen(false)} className="cursor-pointer hover:text-red-600">AGROALIMENTAIRE</p>
+              <p onClick={() => setIsMenuOpen(false)} className="cursor-pointer hover:text-red-600">CHIMIE ET COSM'IQUE</p>
+            </div>
+          </div>
+
+          
+          <button onClick={() => setIsMenuOpen(false)} className="block w-full text-left font-bold text-gray-800 text-sm border-b pb-2">NOS RÉFÉRENCES</button>
+          <button onClick={() => setIsMenuOpen(false)} className="block w-full text-left font-bold text-gray-800 text-sm border-b pb-2">ACTUALITÉS</button>
+          <button onClick={() => setIsMenuOpen(false)} className="block w-full text-left font-bold text-gray-800 text-sm border-b pb-2">CONTACT</button>
+        </nav>
+      </div>
+
+    </div>
+  </div>
+)}
     </header>
   )
 }
