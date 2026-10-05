@@ -41,10 +41,10 @@ const pages = {
   contact: 'Contact',
 }
 
-const nav = [
+export const nav = [
   { label: 'ACCUEIL', page: 'accueil' },
   {
-    label: 'NOTRE SOCIETÉ',
+    label: 'NOTRE SOCIÉTÉ',
     page: 'presentation',
     children: [
       { label: 'PRÉSENTATION', page: 'presentation' },
@@ -70,7 +70,7 @@ const nav = [
       { label: 'ÉNERGIE', page: 'energie' },
       { label: 'MÉCANIQUE', page: 'mecanique' },
       { label: 'AGROALIMENTAIRE', page: 'agroalimentaire' },
-      { label: 'CHIMIE ET COSM’IQUE', page: 'chimie' },
+      { label: "CHIMIE ET COSMETIQUE", page: 'chimie' },
     ],
   },
   { label: 'NOS RÉFÉRENCES', page: 'references' },
@@ -377,77 +377,68 @@ function Header({ currentPage, setCurrentPage, nav, logoUp }) {
   <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm lg:hidden flex justify-start">
     <div className="w-[85%] max-w-sm bg-white p-5 shadow-2xl h-full flex flex-col">
       
+      {/* Header Drawer */}
       <div className="flex items-center justify-between border-b pb-4 mb-3 flex-shrink-0">
         <img src={logoUp} alt="USINAGE PRO" className="h-10 w-auto" />
         <button
+          type="button"
           onClick={() => setIsMenuOpen(false)}
-          className="p-2 text-gray-500 hover:text-red-600 rounded-md border"
+          className="p-2 text-gray-500 hover:text-[#d41428] rounded-md border"
         >
           ✕
         </button>
       </div>
 
+      {/* Contenu Défilable avec Navigation */}
       <div className="flex-1 overflow-y-auto pr-2 space-y-4">
         
-        <div className="relative mb-4">
+        {/* Recherche Mobile */}
+        <form onSubmit={handleSearch} className="relative mb-4">
           <input
             type="text"
             placeholder="Rechercher..."
-            className="w-full border p-2 pr-10 text-sm rounded"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full border p-2 pr-10 text-sm rounded outline-none"
           />
-          <button className="absolute right-0 top-0 bottom-0 bg-[#d41428] text-white px-3 rounded-r">
+          <button type="submit" className="absolute right-0 top-0 bottom-0 bg-[#d41428] text-white px-3 rounded-r">
             🔍
           </button>
-        </div>
+        </form>
 
-   
+        {/* Dynamic Mobile Navigation */}
         <nav className="space-y-3">
-      
-          <button
-            onClick={() => { setCurrentPage('home'); setIsMenuOpen(false); }}
-            className="block w-full text-left font-bold text-[#d41428] border-b pb-2"
-          >
-            ACCUEIL
-          </button>
+          {nav.map((item) => (
+            <div key={item.label} className="border-b pb-2">
+              <button
+                type="button"
+                onClick={() => handleNavClick(item.page)}
+                className={`block w-full text-left font-bold uppercase text-sm mb-1 ${
+                  currentPage === item.page ? 'text-[#d41428]' : 'text-gray-800'
+                }`}
+              >
+                {item.label}
+              </button>
 
-         
-          <div className="space-y-1 border-b pb-2">
-            <p className="font-bold text-gray-800 text-sm">NOTRE SOCIÉTÉ</p>
-            <div className="pl-3 border-l-2 border-red-500 space-y-1 text-sm text-gray-600">
-              <p onClick={() => setIsMenuOpen(false)} className="cursor-pointer hover:text-red-600">PRÉSENTATION</p>
-              <p onClick={() => setIsMenuOpen(false)} className="cursor-pointer hover:text-red-600">HISTOIRE</p>
-              <p onClick={() => setIsMenuOpen(false)} className="cursor-pointer hover:text-red-600">QUALITÉ</p>
+              {/* Sous-menus s'ils existent */}
+              {item.children && (
+                <div className="pl-3 border-l-2 border-[#d41428] space-y-1 mt-1">
+                  {item.children.map((child) => (
+                    <button
+                      key={child.label}
+                      type="button"
+                      onClick={() => handleNavClick(child.page)}
+                      className="block w-full text-left text-sm py-1 text-gray-600 hover:text-[#d41428]"
+                    >
+                      {child.label}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
-          </div>
-
-         
-          <div className="space-y-1 border-b pb-2">
-            <p className="font-bold text-gray-800 text-sm">NOS SAVOIR-FAIRE</p>
-            <div className="pl-3 border-l-2 border-red-500 space-y-1 text-sm text-gray-600">
-              <p onClick={() => setIsMenuOpen(false)} className="cursor-pointer hover:text-red-600">ETUDES</p>
-              <p onClick={() => setIsMenuOpen(false)} className="cursor-pointer hover:text-red-600">RÉALISATIONS</p>
-              <p onClick={() => setIsMenuOpen(false)} className="cursor-pointer hover:text-red-600">SYSTÈMES</p>
-              <p onClick={() => setIsMenuOpen(false)} className="cursor-pointer hover:text-red-600">SERVICES</p>
-            </div>
-          </div>
-
-          
-          <div className="space-y-1 border-b pb-2">
-            <p className="font-bold text-gray-800 text-sm">NOS DOMAINES D'INTERVENTION</p>
-            <div className="pl-3 border-l-2 border-red-500 space-y-1 text-sm text-gray-600">
-              <p onClick={() => setIsMenuOpen(false)} className="cursor-pointer hover:text-red-600">TRANSPORT</p>
-              <p onClick={() => setIsMenuOpen(false)} className="cursor-pointer hover:text-red-600">ÉNERGIE</p>
-              <p onClick={() => setIsMenuOpen(false)} className="cursor-pointer hover:text-red-600">MÉCANIQUE</p>
-              <p onClick={() => setIsMenuOpen(false)} className="cursor-pointer hover:text-red-600">AGROALIMENTAIRE</p>
-              <p onClick={() => setIsMenuOpen(false)} className="cursor-pointer hover:text-red-600">CHIMIE ET COSM'IQUE</p>
-            </div>
-          </div>
-
-          
-          <button onClick={() => setIsMenuOpen(false)} className="block w-full text-left font-bold text-gray-800 text-sm border-b pb-2">NOS RÉFÉRENCES</button>
-          <button onClick={() => setIsMenuOpen(false)} className="block w-full text-left font-bold text-gray-800 text-sm border-b pb-2">ACTUALITÉS</button>
-          <button onClick={() => setIsMenuOpen(false)} className="block w-full text-left font-bold text-gray-800 text-sm border-b pb-2">CONTACT</button>
+          ))}
         </nav>
+
       </div>
 
     </div>
@@ -1125,6 +1116,7 @@ function App() {
   }, [currentPage])
 
   const go = (page) => {
+    console.log("Page cliquée :", page)
     setCurrentPage(page)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
@@ -1145,12 +1137,12 @@ function App() {
 
   return (
     <div className="min-h-screen bg-white text-[#222]">
-      <Header 
-        currentPage={currentPage} 
-        setCurrentPage={go} 
-        nav={nav} 
-        logoUp={logoUp} 
-      />
+     <Header 
+  currentPage={currentPage} 
+  setCurrentPage={go}
+  nav={nav} 
+  logoUp={logoUp} 
+/>
       {renderPage()}
       <Footer setCurrentPage={go} />
     </div>
